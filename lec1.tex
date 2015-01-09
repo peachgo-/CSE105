@@ -1,0 +1,128 @@
+
+\section{Deterministic Finite Automaton (DFA)}
+% ======================================================
+
+A machine consists different drawn in circles with names. Often a state drawn as
+a double circle is an ``acceptive state,'' and a plain circle indicates a
+rejective state. A machine receives a string consisted of `1's and `0's as input
+and the states change as the machine read through input digits. An arrow is used
+to indicate which state is to start with. See \autoref{exa:a_DFA} for detailed
+information.
+
+\begin{example}[A DFA]
+    \label{exa:a_DFA}
+
+    Let's first look at the DFA below which starts at state $A$.
+    \centgraph{pics/mp/dfa-0.pdf}
+
+    If the string ``010110'' is input to the machine, will it result in true or false?
+    Will the State be acceptive or rejective?
+    \[
+        \xrightarrow{010110}
+        \fbox{M}
+        \xrightarrow{ 1/0 \text{(True/False, Accept / Reject)} }
+    \]
+
+    There are two arrows leaving state $A$: one with a label reading `1' which points to
+    state $B$ and one reading `0' which goes back to state $A$ itself. That means, if an
+    input digit reads `1,' the state changes to B, and if `0' the state stays in $A$
+
+    Now step through the procedure:
+    \begin{compactenum}
+    \item
+        The machine starts off at state A with input `0,' which, as explained above,
+        changes the state to $A$ itself.
+    \item
+        Next, the second digit `1' is read so the state is changed to $B$.
+    \item
+        The next difit `0' makse the state B to switch to state $C$
+    \item
+        Then state $C$ reads `1' so no state change occurs.
+    \item
+        The next digit is `1' again so the state remains still on $C$.
+    \item
+        Last, the digit `0' switches the state from $C$ to $B$.
+    \end{compactenum}
+    Thus the input string ``010110'' changes the machine to state $B$, which is an
+    acceptive state.
+
+\end{example}
+
+\begin{definition}[DFA]
+    \label{def:DFA}
+
+    A DFA is a 5-turple
+    \[
+        M = (Q, \Sigma,\delta,s,F)
+    \]
+    where
+    \begin{compactdesc}
+    \item[$Q$]      is a fnite set,     for states
+    \item[$\sigma$] is a finite set,    for input alphabet
+    \item[$s$]      $\in Q$,            for start states 
+    \item[$F$]      $\subseteq Q$,      for accepting states
+    \item[$\delta$]
+        $Q \times \Sigma \mapsto Q$,
+        a function that specifies the transition between states
+    \end{compactdesc}
+\end{definition}
+
+\begin{example}[DFA table]
+    \label{exa:DFA_table}
+    According to definition \autoref{def:DFA},
+    the machine in \autoref{exa:a_DFA} can be denoted by
+    \[
+        M = (Q, \Sigma,\delta,s,F)
+    \]
+    where
+    \begin{compactitem}
+    \item $Q = \{ A,B,C \}$
+    \item $\Sigma = \{ 0,1 \}$
+    \item $s = \{ A \}$
+    \item $F = \{ B,C \}$
+    \end{compactitem}
+    And function $\delta$ can be described by the table below.
+    \begin{center}
+        \begin{tabular}{Mc Mc Mc}
+        \hline
+        \delta  & 0 & 1 \\
+        \hline
+        A       & A & B \\
+        B       & C & A \\
+        C       & B & C \\
+        \hline
+        \end{tabular}
+    \end{center}
+
+\end{example}
+
+\begin{definition}[$f_M$]
+    For and DFA $ M = (Q,\Sigma,\delta,s,F) $,
+    let
+    \[
+        f_M: \Sigma^* \mapsto \{ \text{True}, \text{False} \}
+    \]
+    where $\Sigma^*$ is a set of string over $\Sigma$.
+
+    \[
+        f_M(w)
+        = \begin{cases}
+            \text{True},  & \delta^*(s,w) \in F \\
+            \text{False}, & else
+        \end{cases}
+    \]
+\end{definition}
+
+\begin{definition}[$\delta^*$]
+    \[
+        \delta^* : Q \times \Sigma^* \mapsto Q
+    \]
+    which is an inductive function defined as
+    \[
+        \begin{cases}
+            \delta^*(q, \varepsilon) &= q \\
+            \delta^*(q, aw)          &= \delta^*\( \delta(q,a), w\)
+        \end{cases}
+    \]
+    where $(q \in Q, a \in \Sigma, w \in \Sigma^*)$
+\end{definition}
