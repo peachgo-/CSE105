@@ -1,0 +1,101 @@
+
+\begin{definition}[Configuration]
+    \[
+        Conf = Q \times \Sigma^*
+    \]
+\end{definition}
+
+\begin{definition}[Initial Configurations]
+    The initial configuration of a machine $I_M(w) \in Conf$
+    \[
+        I_M(w) = (s,w)
+    \]
+\end{definition}
+
+\begin{definition}
+    The final configuration of a machine $H_M(w) \subseteq Conf$
+    \[
+        H_M = \{ (q,u) \mid q \in Q, u = \varepsilon \} 
+    \]
+\end{definition}
+
+\begin{definition}
+The output of a machine is a function that either ``True'' or ``False.''
+    \[
+        O_M: H_M \mapsto \{\text {True}, \text {False}\}
+    \]
+    defined as
+    \[
+        O_M(q,\epsilon)
+        = \begin{cases}
+            \text{True},  & if \quad q \in F \\
+            \text{False}, & if \quad q \notin F
+        \end{cases}
+    \]
+\end{definition}
+
+% ----------
+In summary $\colon$
+\begin{itemize}
+\item F $\subseteq$ Q
+\item s $\in$ Q
+\item $\epsilon: Q \times \Sigma \mapsto Q$
+\end{itemize}
+% ----------
+
+\begin{example}[\autoref{exa:a_DFA} as configurations] 
+    With input ``10010'' write in mathematical language, the confiuration of machine in
+    \autoref{exa:a_DFA}:
+    \begin{align*}
+        I_M(10010) 
+        = (A,10010)
+        \rightarrow      (B,0010)
+        \rightarrow      (C,010)
+        \rightarrow      (B,10)
+        \rightarrow      (A,0)
+        \rightarrow      (A, \varepsilon) \in H_M
+    \end{align*}
+    And thus the out put 
+    \[
+        O_F(A,\varepsilon) = \text{False}
+    \].
+
+    The machine in fact will only accept integers that are \emph{NOT} multiples of 3.
+\end{example}
+
+
+\begin{definition}[]
+    
+    \[
+        R_M \subseteq Conf \rightarrow_M 
+        = \{ 
+            (q,aw), \( \delta(q,a),w \) 
+            \mid q \in Q, a \in \Sigma, w \in \Sigma^* 
+        \}
+    \]
+\end{definition}
+
+
+\begin{definition}[]
+    \[
+        f'_n(w) = O_F(C_n)
+    \]
+    e.g. 
+    \[
+        I_M(w) \rightarrow_M C_1 \rightarrow_M C_2 \rightarrow_M \dots \rightarrow_M 
+        \in H_M
+    \]
+\end{definition}
+
+% ------------------------------
+for example
+\begin{align*}
+    L(M)   & = \{ w \in \Sigma^* \mid f_M(w) = \text{True}\} \\
+    L(M_1) & \neq \Sigma^*   \\
+      1001 & \notin 3\times \mathbb{Z}
+\end{align*}
+
+
+
+
+
