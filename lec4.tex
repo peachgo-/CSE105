@@ -1,0 +1,91 @@
+
+\begin{example}[How many states needed?]
+    \[
+        L = \set{w \in \set{0,1}^* \mid the 5^{th} symbols (from the left) of w is 0}
+    \]
+% draw DFA
+% 7 states
+
+    \[
+    L = \set{w \in \set{0,1}^* \mid the 5^{th} symbols (from the right) of w is 0}
+
+    \]
+\end{example}
+
+\begin{definition}[NFA]
+    \label{def:NFA}
+    \[
+        N = (Q,\Sigma, \delta,s,F)
+    \]
+    where
+    \begin{compactdesc}
+    \item[$Q,\Sigma$]      is a finite set,   
+    \item[$s$]      $\in Q$,    
+    \item[$F$]      $\subseteq Q$,  
+    \item[$\delta$]
+        $Q \times \Sigma_\varepsilon \mapsto Q$, \\
+        \delta(A,\varepsilon) = \set{H}
+        \delta(D,\varepsilon) = \emptyset
+
+    \item[$\Sigma_\varepsilon$] = \Sigma \cup \set{\varepsilon}
+    \end{compactdesc}
+\end{definition}
+
+    \[
+        Conf = Q \times \Sigma^*
+    \]
+    \[
+        I_M(w) = (s,w)
+    \]
+    \[
+        H_M(w) = Q \times \set{\varepsilon} 
+    \]
+    \[
+        O_M(q,\varepsilon)
+        = \begin{cases}
+            \text{True},  & if \quad q \in F \\
+            \text{False}, & otherwise 
+        \end{cases}
+    \]
+
+    \[
+        R = \set{(q,aw) \rightarrow (q',w) \mid 
+            \forall q \in Q, a \in \Sigma, q' \in \delta(q,a)}
+    \]
+
+    In DFA, only one output
+    In NFA, many possible ways from the same input
+
+    C_0, C_1, \dots , C_n \\
+    Computation is a sequence of Configurations, such that $C_0 = I(w)$
+    \forall i, (C_i, C_{i+1} \in \mathbb{R}) \\
+    [C_i \mapsto C_{i+1}], C_n \in H
+% ---------------------------------------------------------------------
+    Accepting if $ O(C_n) = T $\\
+    Rejecting if $O(C_n) = F $\\
+
+    \begin{definition}
+        \[
+            L(N) = \set{w \mid \exists accepting computation on input w}
+        \]
+    \begin{end}
+
+    \begin{Threom}
+        \forall \NFA
+        \[
+            \exists DFA M = (Q', \Sigma', \delta', s', F') such that \\
+            L(N) = L(M)
+        \]
+    \end{Threom}
+
+    \begin{proof}
+        Q' = f(Q)
+        F' = \set{A \subseteq Q \mid A \cap F \neq \emptyset}
+        s' = E(\set{s})  = \set {q \in Q \mid \exist 
+        s \rightarrow_\varepsilon q_1
+         \rightarrow_\varepsilon q_2
+         \rightarrow_\varepsilon q_3
+         \dots \rightarrow q_n
+        }
+        \delta'(A,a) = E(U_(q \in A), \delta (q,a))
+    \end{proof}

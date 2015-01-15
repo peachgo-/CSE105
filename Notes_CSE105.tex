@@ -216,7 +216,7 @@
 \DeclareRobustCommand{\em}{%
     \@nomath\em
     \if b\expandafter\@car\f@series\@nil \normalfont
-    \else \bfseries
+    \else \bfseries \itshape
     \fi
 }
 \makeatother
@@ -320,13 +320,22 @@
 \newcommand{\dd}{{ \; \mathrm{d} }}
 \newcommand{\abs}[1]{{ \left\lvert #1 \right\rvert }}
 
+\newcommand{\set}[1]{{ \left\{\,#1\,\right\} }}
+\newcommand{\lst}[1]{{ \left(\,#1\,\right) }}
+
 %\newcommand{\dne}{ \mathrm{DNE} }	% Does Not Exist;
 %\newcommand{\defeq}{ \xlongequal{\mathrm{DEF}} }	% equal by definition;
 %\newcommand{\sqr}{ \ensuremath{^2} } % squared;
 % \newcommand{\cels}{{ \ensuremath{^\circ \mathrm{C}} }}
 %\newcommand{\fahr}{{ \ensuremath{^\circ \mathrm{F}} }}
 
+\newcommand{\Conf}{{ \mathrm{Conf} }}
+\newcommand{\true}{{ \text{\upshape True} }}
+\newcommand{\false}{{ \text{\upshape False} }}
+
 %%
+\newcommand{\DFA}{{ M = \lst{Q, \Sigma, \delta, s, F} }}
+\newcommand{\NFA}{{ N = \lst{Q, \Sigma, \delta, s, F} }}
 \newcommand{\combination}{ \mathrm{C} }
 \newcommand{\permutation}{ \mathrm{P} }
 \newcommand{\variance}[1]{{ \mathrm{Var}(#1) }}
@@ -471,6 +480,7 @@
 
 \input{lec1}
 \input{lec2}
+\input{lec3}
 
 \end{document}
 
