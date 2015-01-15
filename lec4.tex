@@ -1,91 +1,109 @@
 
+\section{Nondeterministic Finite Automaton (NFA)}
+% ==================================================
+
 \begin{example}[How many states needed?]
     \[
-        L = \set{w \in \set{0,1}^* \mid the 5^{th} symbols (from the left) of w is 0}
+        L = \set{w \in \set{0,1}^* \mid
+            \text{ the $5^{th}$ (from the left) of $w$ is $0$ } }
     \]
-% draw DFA
-% 7 states
+    We will need 7 states
 
+    \centgraph{mp/dfa-2.pdf}
+
+    What if
     \[
-    L = \set{w \in \set{0,1}^* \mid the 5^{th} symbols (from the right) of w is 0}
-
+    L = \set{w \in \set{0,1}^* \mid
+        \text{ the $5^{th}$  from the \emph right) of $w$ is $0$} }
     \]
+
+    \centgraph{mp/dfa-3.pdf}
+    Notice this is a \textbf{DFA}
 \end{example}
 
 \begin{definition}[NFA]
     \label{def:NFA}
+    An NFA is a $5$-tuple
     \[
         N = (Q,\Sigma, \delta,s,F)
     \]
     where
-    \begin{compactdesc}
-    \item[$Q,\Sigma$]      is a finite set,   
-    \item[$s$]      $\in Q$,    
-    \item[$F$]      $\subseteq Q$,  
-    \item[$\delta$]
-        $Q \times \Sigma_\varepsilon \mapsto Q$, \\
-        \delta(A,\varepsilon) = \set{H}
-        \delta(D,\varepsilon) = \emptyset
+    \begin{compactitem}
+    \item $Q$ and $\Sigma$ are finite sets
+    \item $s \in Q$
+    \item $F \subseteq Q$
+    \item $\delta \colon
+        Q \times \Sigma_\varepsilon
+        \footnote{$\Sigma_\varepsilon = \Sigma \cup \set{\varepsilon}$}
+        \mapsto \powerset(Q)$
 
-    \item[$\Sigma_\varepsilon$] = \Sigma \cup \set{\varepsilon}
-    \end{compactdesc}
+        $\delta(A,\varepsilon) = \set{H}$
+        $\delta(D,\varepsilon) = \emptyset$
+
+    \end{compactitem}
+
 \end{definition}
 
-    \[
-        Conf = Q \times \Sigma^*
-    \]
-    \[
-        I_M(w) = (s,w)
-    \]
-    \[
-        H_M(w) = Q \times \set{\varepsilon} 
-    \]
-    \[
-        O_M(q,\varepsilon)
-        = \begin{cases}
-            \text{True},  & if \quad q \in F \\
-            \text{False}, & otherwise 
-        \end{cases}
-    \]
+% \begin{definition}[Configurations of NFA]
+%     \begin{align*}
+%         \Conf  &= Q \times \Sigma^* \\
+% 
+%         I_M(w) &= (s,w)             \\
+% 
+%         H_M(w) &= Q \times \set\varepsilon \\
+% 
+%         O_M(q,\varepsilon)
+%         &= \begin{cases}
+%             \true,  & if \quad q \in F \\
+%             \false, & \text{otherwise}
+%             \end{cases}\\
+% 
+%         R = \set{(q,aw) \mapsto (q',w) \mid
+%             \forall q \in Q, a \in \Sigma_\varepsilon, w \in \Sigma^*}
+%     \end{align*}
+% \end{definition}
 
-    \[
-        R = \set{(q,aw) \rightarrow (q',w) \mid 
-            \forall q \in Q, a \in \Sigma, q' \in \delta(q,a)}
-    \]
+In DFA, only one output; 
+In NFA, many possible ways from the same input.
 
-    In DFA, only one output
-    In NFA, many possible ways from the same input
-
-    C_0, C_1, \dots , C_n \\
+    $C_0, C_1, \dots , C_n$
     Computation is a sequence of Configurations, such that $C_0 = I(w)$
-    \forall i, (C_i, C_{i+1} \in \mathbb{R}) \\
-    [C_i \mapsto C_{i+1}], C_n \in H
+    $\forall i, (C_i, C_{i+1} \in \mathbb{R})$ \\
+    $[C_i \mapsto C_{i+1}], C_n \in H $ \\
 % ---------------------------------------------------------------------
-    Accepting if $ O(C_n) = T $\\
-    Rejecting if $O(C_n) = F $\\
+    \newpage
 
-    \begin{definition}
-        \[
-            L(N) = \set{w \mid \exists accepting computation on input w}
-        \]
-    \begin{end}
+    \fbox{ 
+    Accepting if $O(C_n)$ = \true 
+    Rejecting if $O(C_n)$ = \false 
+}
 
-    \begin{Threom}
-        \forall \NFA
-        \[
-            \exists DFA M = (Q', \Sigma', \delta', s', F') such that \\
-            L(N) = L(M)
-        \]
-    \end{Threom}
+\begin{definition}[Language of NFA]
+    \[
+        L(N) = \set{w \mid \exists \text{accepting computation on input $w$} }
+    \]
+\end{definition}
 
-    \begin{proof}
-        Q' = f(Q)
-        F' = \set{A \subseteq Q \mid A \cap F \neq \emptyset}
-        s' = E(\set{s})  = \set {q \in Q \mid \exist 
-        s \rightarrow_\varepsilon q_1
-         \rightarrow_\varepsilon q_2
-         \rightarrow_\varepsilon q_3
-         \dots \rightarrow q_n
-        }
-        \delta'(A,a) = E(U_(q \in A), \delta (q,a))
-    \end{proof}
+\begin{theorem}
+    \label{thm:NFA_to_DFA}
+    \[
+        \forall \NFA,\,
+        \exists \text{\upshape DFA} \quad M = \lst{ Q', \Sigma', \delta', s', F'} \text{s.t.}
+        L(N) = L(M)
+    \]
+\end{theorem}
+
+\begin{proof}[Proof of \autoref{thm:NFA_to_DFA}]
+    \begin{align*}
+        Q' &= \powerset(Q) \\
+        F' &= \set{ A \subseteq Q \mid A \cap F \neq \varnothing} \\
+        s' &= E(\set{s})  = \set{q \in Q \mid \exists s
+                                                \xrightarrow\varepsilon q_1
+                                                \xrightarrow\varepsilon q_2
+                                                \xrightarrow\varepsilon q_3
+                                                \cdots 
+                                                \xrightarrow\varepsilon q_n
+        } \\
+        \delta'(A, a) &= E( \operatorname*\cup_{q \in A} \delta (q,a) )
+    \end{align*}
+\end{proof}
