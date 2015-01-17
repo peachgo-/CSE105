@@ -336,11 +336,12 @@
 %%
 \newcommand{\DFA}{{ M = \lst{Q, \Sigma, \delta, s, F} }}
 \newcommand{\NFA}{{ N = \lst{Q, \Sigma, \delta, s, F} }}
-\newcommand{\combination}{ \mathrm{C} }
-\newcommand{\permutation}{ \mathrm{P} }
+\newcommand{\rev}{{ \mathrm{rev} }}
+\newcommand{\combination}{{ \mathrm{C} }}
+\newcommand{\permutation}{{ \mathrm{P} }}
 \newcommand{\variance}[1]{{ \mathrm{Var}(#1) }}
 \newcommand{\stirling}{ \mathrm{S} }
-\newcommand{\powerset}{ \mathbb{P} }
+\newcommand{\powerset}{ \mathcal{P} }
 \newcommand{\Degree}{ \mathbb{Deg} }
 \newcommand{\degree}{ \mathbb{deg} }
 
@@ -396,6 +397,29 @@
 		\includegraphics[width=#1]{#2}
 	\end{center}
 }
+
+% \myfigure{Example of NFA}{pics/mp/nfa-0.pdf}
+% \myfigure[width=1cm]{Example of NFA}{pics/mp/nfa-0.pdf}
+\newcommand{\myfigure}[3][]{
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[#1]{#3}
+        \caption{#2}
+    \end{figure}
+}
+
+%% simplified figure with label
+% \myFigure[width=1cm]{Example of NFA}{exa:a}{pics/mp/nfa-0.pdf}
+% \myFigure{Example of NFA}{exa:ab}{pics/mp/nfa-0.pdf}
+\newcommand{\myFigure}[4][]{
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[#1]{#4}
+        \caption{#2}
+        \label{#3}
+    \end{figure}
+}
+
 
 %% questions & solutions
 %%---------------------------------------------------------------------------
@@ -482,6 +506,7 @@
 \input{lec2}
 \input{lec3}
 \input{lec4}
+\input{lec5}
 
 \end{document}
 
