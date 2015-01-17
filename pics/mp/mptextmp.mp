@@ -1,4 +1,4 @@
 verbatimtex %&latex
 \documentclass{article}\begin{document} etex
-btex  \small $0,1$ etex
+btex  \small  etex
 verbatimtex \end{document} etex

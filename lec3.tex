@@ -1,13 +1,13 @@
 
-\begin{definition}[Language of Machine M]
-
+\subsection{Languages}
+% ------------------------------------------------------------
 A subset of $\Sigma^*$ of a DFA that contains all inputs to which the output of the
 machine is \true is called the \emph{language} of the machine.
 
-\end{definition}
 
 In other word, If $A$ is the set of all strings that machine $M$ accepts, we say that $A$
 is the \emph{ language of machine $M$} and write $L(M) = A$. ($M$ \emph{recognizes} $A$)
+
 \begin{definition}[Regularity of Language]
     $ L \subseteq \Sigma^* $
     is regular if
@@ -65,7 +65,7 @@ Notice that
 \end{definition}
 
 \begin{theorem}
-    \label{thm:R^C}
+    \label{thm:R_closed_under_union}
     $\mathbb R$ is closed under complement.
 \end{theorem}
 
@@ -94,6 +94,7 @@ Notice that
         L_1 \in \mathbb R \vee L_2 \in \mathbb R
         \implies L_1 \cup L_2 \in \mathbb R
     $]
+    \label{exa:R_closed_under_union}
         Yes, $\mathbb R$ is closed under union.
 \end{example}
 

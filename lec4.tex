@@ -2,6 +2,24 @@
 \section{Nondeterministic Finite Automaton (NFA)}
 % ==================================================
 
+In a \emph{nondeterministic} machine, several choices may exist for the next state at
+any point.
+
+\subsection{What is NFA}
+% ------------------------------------------------------------
+
+Nondeterminism is a generalization of determinism, so every deterministic finite
+automaton(DFA) is automatically a nondeterministic finit automaton(NFA). Notice the Difference
+between DFA figures and NFA's: 
+\begin{compactenum}
+    \item 
+        NFA may has more than one exiting arrow for symbols in the alphabet.
+    \item
+        NFA may only only have arrows labeled with members of the alphabet but also
+        $\varepsilon$. $(0,1,\cdots,n)$ arrows may exit from each state with the label
+        $\varepsilon$.
+\end{compactenum}
+
 \begin{example}[How many states needed?]
     \[
         L = \set{w \in \set{0,1}^* \mid
@@ -9,7 +27,7 @@
     \]
     We will need 7 states
 
-    \centgraph{mp/dfa-2.pdf}
+    \centgraph{mp/nfa-0.pdf}
 
     What if
     \[
@@ -17,8 +35,8 @@
         \text{ the $5^{th}$  from the \emph right) of $w$ is $0$} }
     \]
 
-    \centgraph{mp/dfa-3.pdf}
-    Notice this is a \textbf{DFA}
+    \centgraph{mp/nfa-1.pdf}
+    Notice this is a \textbf{DFA}, state A has two exit arrows for 0.
 \end{example}
 
 \begin{definition}[NFA]
@@ -36,6 +54,7 @@
         Q \times \Sigma_\varepsilon
         \footnote{$\Sigma_\varepsilon = \Sigma \cup \set{\varepsilon}$}
         \mapsto \powerset(Q)$
+        \footnote{$\powerset(Q)$ = powerset of $Q$}
 
         $\delta(A,\varepsilon) = \set{H}$
         $\delta(D,\varepsilon) = \emptyset$
@@ -44,45 +63,65 @@
 
 \end{definition}
 
-% \begin{definition}[Configurations of NFA]
-%     \begin{align*}
-%         \Conf  &= Q \times \Sigma^* \\
-% 
-%         I_M(w) &= (s,w)             \\
-% 
-%         H_M(w) &= Q \times \set\varepsilon \\
-% 
-%         O_M(q,\varepsilon)
-%         &= \begin{cases}
-%             \true,  & if \quad q \in F \\
-%             \false, & \text{otherwise}
-%             \end{cases}\\
-% 
-%         R = \set{(q,aw) \mapsto (q',w) \mid
-%             \forall q \in Q, a \in \Sigma_\varepsilon, w \in \Sigma^*}
-%     \end{align*}
-% \end{definition}
+As said, since a DFA \emph{is} an NFA, the definition of NFA is simply a generalized
+version of DFA's. The difference between NFA and DFA regard as  transition function
+$\delta$ is in NFA, $\delta$ maps to a set of states instead of exactly one state as of a
+DFA
 
-In DFA, only one output; 
-In NFA, many possible ways from the same input.
+\subsection{Configurations of NFAs}
+% ------------------------------------------------------------
 
-    $C_0, C_1, \dots , C_n$
-    Computation is a sequence of Configurations, such that $C_0 = I(w)$
-    $\forall i, (C_i, C_{i+1} \in \mathbb{R})$ \\
-    $[C_i \mapsto C_{i+1}], C_n \in H $ \\
-% ---------------------------------------------------------------------
-    \newpage
+\begin{definition}[Configurations of NFA]
+    \begin{align*}
+        \Conf  &= Q \times \Sigma^* \\
+        I_M(w) &= (s,w)             \\
+        H_M(w) &= Q \times \set\varepsilon \\
+        O_M(q,\varepsilon)
+              &= \begin{cases}
+              \true,  & if \quad q \in F \\
+              \false, & \text{otherwise}
+              \end{cases}
+              \\
+              R &= \set{(q,aw) \mapsto (q',w) \mid
+                 \forall q \in Q, a \in \Sigma_{\varepsilon}, w \in \Sigma^*}
+                 \end{align*}
+\end{definition}
 
-    \fbox{ 
-    Accepting if $O(C_n)$ = \true 
-    Rejecting if $O(C_n)$ = \false 
-}
+After reading the symbol, an NFA splits into multiple copies of itself and follows
+\emph{all} the possibilities in parallel. If the next input symbol doesn't appear on any
+of the arrows exiting the state occupied by a copy of the machine, that copy of the
+machine dies, along with the branch of the computation associated with if.Finally, if 
+\emph{any one} of these copies of the machine is in an accept state at the end of the
+input, the \upshape{NFA} accepts the input string. That is to say, if at least one of
+these processes accepts, then the entire computation accepts.
+
+\begin{definition}[Computation]
+    \label{def:computation}
+    \[
+    C_0, C_1, \dots , C_n
+    \]
+    Computation is a sequence of Configurations, such that 
+    \[
+    C_0 = I(w) \quad 
+    \forall i, (C_i, C_{i+1} \in \mathbb{R}) \quad
+    [C_i \mapsto C_{i+1}], C_n \in H  
+    \]
+\end{definition}
+
+an NFA is Accepting if $O(C_n)$ = \true , Rejecting if $O(C_n)$ = \false 
 
 \begin{definition}[Language of NFA]
     \[
         L(N) = \set{w \mid \exists \text{accepting computation on input $w$} }
     \]
 \end{definition}
+
+\section{NFA \& DFA}
+% ============================================================
+
+According to \autoref{thm:NFA_to_DFA}, and NFA can be translated to a DFA. The method is
+to fully expand the NFA and draw out every branch of it, which is explained with more
+details in \autoref{dem:NFA_to_DFA}.
 
 \begin{theorem}
     \label{thm:NFA_to_DFA}
@@ -94,6 +133,9 @@ In NFA, many possible ways from the same input.
 \end{theorem}
 
 \begin{proof}[Proof of \autoref{thm:NFA_to_DFA}]
+    \label{dem:NFA_to_DFA}
+    Let $\NFA$ be the NFA recognizing some language $A$,
+    we construct a DFA $M = \lst{Q',\Sigma,\delta',s',F'}$ recognizing $A$.
     \begin{align*}
         Q' &= \powerset(Q) \\
         F' &= \set{ A \subseteq Q \mid A \cap F \neq \varnothing} \\
@@ -102,8 +144,9 @@ In NFA, many possible ways from the same input.
                                                 \xrightarrow\varepsilon q_2
                                                 \xrightarrow\varepsilon q_3
                                                 \cdots 
-                                                \xrightarrow\varepsilon q_n
+                                                \xrightarrow\varepsilon q
         } \\
-        \delta'(A, a) &= E( \operatorname*\cup_{q \in A} \delta (q,a) )
+        \delta'(A, a) &= E( \operatorname*\bigcup_{q \in A} \delta (q,a) )
+%         \footnote{$\operatorname*\cup_{q \in A} =  $}
     \end{align*}
 \end{proof}
