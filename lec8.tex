@@ -1,0 +1,22 @@
+
+DFA with a finite number of state, if read p symbols with p+1 states, there must be one
+state that is repeat.
+
+\begin{example}[a regular language satisfy Pumping Lemma]
+    \[
+        L = \set{w \in \set{0,1}^* \mid w \text{ is a multiple of } 5}
+    \]
+    Given a string $11110000$ with $P = 5$, which means if a string is of length at least
+    5, then it can be pumped.
+
+    We can transform the string to $xyz$ with $x=1111, y=0, z=000$,
+    so $\abs{xy} = 5 \le P$ satisfies the pumping lemma. 
+    \center
+    \begin{tabular}{Mc|Mc|Mc}
+        x                       & y^i                   &   z \\
+        \hline
+        \overbrace{1111}^{=15}  & \overbrace{0}^{2^i}   & \overbrace{000}^{2^3} \\
+    \end{tabular}
+    $\Rightarrow 15 \cdot 2^1 \cdot 2^3$, 
+\end{example}
+

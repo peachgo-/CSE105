@@ -135,4 +135,56 @@ simple_connect( a1 1, a1 0, 0, "" );
 
 endfig;
 % --------------------------------------------------
+
+beginfig(7);
+with spacing((62,29)) matrix.a(2,3);
+
+node.a[0][0]( TEX("A") );
+node.a[0][2]( TEX("B") );
+node_double.a[1][1]( TEX("C") );
+
+incoming(0, "") (a[0][0]) 120;
+
+
+simple_connect( a0 0, a0 2, 0, "" );
+simple_connect( a0 2, a1 1, -100, "" );
+
+endfig;
+% --------------------------------------------------
+
+beginfig(8);
+with spacing((62,29)) matrix.a(2,4);
+
+node_double.a[0][0]( TEX("S") );
+node.a[0][1]( TEX("A") );
+node.a[0][3]( TEX("B") );
+node_double.a[1][2]( TEX("C") );
+
+incoming(0, "") (a[0][0]) 120;
+
+
+simple_connect( a0 0, a0 1, 0, "$\large\varepsilon$" );
+simple_connect( a0 1, a0 3, 0, "" );
+simple_connect( a0 3, a1 2, -100, "" );
+simple_connect( a1 2, a0 1, 190, "$\large\varepsilon$" );
+
+endfig;
+% --------------------------------------------------
+
+beginfig(9);
+with spacing((62,29)) matrix.a(1,3);
+
+node.a[0][0]( TEX("s"));
+node.a[0][1]( TEX(""));
+node_double.a[0][2]( TEX(""));
+
+incoming(0, "") (a[0][0]) 120;
+simple_connect( a0 0, a0 1, 0, "$x$" );
+simple_connect( a0 1, a0 2, 0, "$z$" );
+simple_loop( a0 1, "down", "$y^i$" );
+
+endfig;
+% --------------------------------------------------
+
+
                                         end

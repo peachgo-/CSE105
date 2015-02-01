@@ -1,0 +1,106 @@
+
+\subsection{Non-Regular Languages}
+% --------------------------------------------------
+
+Are there languages which are not regular?
+The answer is obviously ``Yes,'' but what are they?
+Take binary strings as example,
+we want to find 
+$L \subseteq \set{0,1}^*$ s.t. $\forall$ RegEx $E, L(E) \neq L.$
+With symbols 
+\[
+    \set{0,1,\cdot,+(\cup),*,(,),\emptyset}
+\]
+any regular language can be expressed,
+\[
+    E = (0+1)^*
+\]
+Map each of the symbols to 
+$
+0 = 000,
+1 = 001,
+\cdot = 010,
+\cdots
+\emptyset = 111
+$
+and use function $\varphi$ to rewrite the regex above,
+\footnote{
+    $\varphi$ stands for string.
+}
+\[
+    \varphi(E) = 101\,000\,011\,001\,110\,100 \qquad \in \set{0,1}^*
+\]
+so
+$
+L(E) \subseteq \set{0,1}^*.
+$
+Then the non-regular language is 
+\[
+    L = \set{ \varphi(E) \mid \varphi(E) \notin L(E) },
+\]
+which is called the diagonal language (see \autoref{def:diagonal_language}).
+
+\begin{definition}[Diagonalization:]
+    \label{def:diagonal_language}
+    \[
+        D = \set{
+            \varphi(E)
+            \mid
+            E \in \text{RegEx}\(\set{0,1}\) , \varphi(E) \notin L(E)
+        }
+    \]
+\end{definition}
+
+\begin{proof}[
+    Proof of $\varphi(''\varnothing'') = ''111'' \notin L(\varnothing) = \varnothing$
+] \ \\
+    Assume for controdiction $L$ is regular,  \\
+    Let $E$ a regular expresstion s.t.\ $L(E) = L$.  \\
+    \[
+        \varphi(E) \in L \leftrightarrow \varphi(E) \notin L(E) = L.
+    \]
+    which is a contradiction to our assumption.
+\end{proof}
+
+\subsection{Pumping Lemma}
+% --------------------------------------------------
+
+All regular language satisfies property ${P}$ which is known as Pumping Lemma(P.L.),
+if a language $L$ does not satisfy $P$ then $L$ is non-regular.
+To prove a non-regular language, we will first assume $L$ is regular, then $L$ must
+satisfies P ,but it doesn't, thus lead to controdiction.
+
+\begin{definition}[Pumping Lemma Property $P$]
+    \begin{align*}
+        &\exists P \ge 1 \qquad \text{(pumping length)} \\
+        &\forall w \in L \text{ of length } \abs{w} \ge P                \\
+        &\exists x,y,z  \in \Sigma^*, w = x \cdot y \cdot z
+    \end{align*}
+    and
+    \begin{compactitem}
+    \item 
+        $
+        \forall i \geq 0, \quad
+        x \cdot y^i \cdot z = x \overbrace{yy \cdots y}^i z \in L.
+        $
+    \item
+        $
+        \abs{y} \ge 0 ( y \neq \varepsilon )
+        $,
+    \item
+        $
+        \abs{xy} \le p
+        $.
+    \end{compactitem}
+    \centgraph[4cm]{pics/mp/nfa-9.pdf}
+\end{definition}
+
+
+
+
+
+
+
+
+
+

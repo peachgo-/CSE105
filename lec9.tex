@@ -1,0 +1,111 @@
+
+
+% \begin{example}[]
+%     let
+%     \[
+%         L = \set{ w \in \set{0,1}^* \mid w^{\text{reverse}} = w }
+%     \]
+%     $w \in L$ could be 00100 or 1001. 0011 $\notin L$.
+% \end{example}
+
+\begin{example}[Prove $P \notin$ Reg Using Pumping Lemma]
+    let
+    \[
+        P = \set{ w \in \set{1}^* \mid \text{$\abs w$ is a prime number} } 
+          = \set {11,111,11111, \cdots}
+    \]
+    Claim: $P$ is not regular.
+
+    \begin{proof}\
+
+        Assume for contradiction $P$ is regular. \\
+        Therefore, by P.L.,
+        there is a ``Pumping Length'' $n \ge 1$ s.t.
+        1) 2) 3) in Pumping Lemma is true, which means
+        all $w \in L$ of length $\abs w \ge n$ can be pumped.
+
+        Let $w = 1^m$ s.t.\ $m \ge n$ and $m$ is a prime,
+        Thus $w = 1^m$ satisfies all 3 conditions of P.L.
+
+        Let
+        $w = xyz$ s.t.\ $w$ remains satisfying the P.L. \\
+        $m = \abs x + \abs y + \abs z $ is a prime. \\
+        By P.L.,
+        \begin{compactenum}
+        \item 
+            $
+            \forall i \ge 0, \quad
+            x \cdot y^i \cdot z = x \overbrace{yy \cdots y}^i z \in L
+            $,
+        \item
+            $
+            \abs y \ge 0 ( y \neq \varepsilon)
+            $,
+        \item
+            $
+            \abs x + \abs y \le n
+            $.
+        \end{compactenum}
+
+        \begin{align*}
+            x y^i z
+            &= 1^{\abs x} \cdot 1^{i \cdot \abs y} \cdot 1^{\abs z}  \\
+            &= 1^{\abs x + i \abs y + \abs z}  \\
+        .\end{align*}
+
+        ${\abs x + i \abs y + \abs z}$ is also a prime according to the assumption.
+        Let
+        $i = m+1$,
+
+        \begin{align*}
+            &\phteq \overbrace{\abs x + \abs y + \abs z}^m + (i-1)\abs y  \\
+            &=      m + (i-1)\abs y  \\
+            &=      m + m\abs y  \\
+            &=      m(1+\abs y) \not \subseteq \text{ prime number }
+            \end{align*}
+        Contradicting
+        $xy^iz \in L$.
+    \end{proof}
+
+\end{example}
+
+\section{Finite State Transducers (FST)}
+% ------------------------------------------------------------
+
+\begin{definition}[Finite State Transducers (FST)]
+    A FST is a $5$-tuple
+    \[
+        M = \lst{ Q,\Sigma,\Gamma,\delta,s }
+    ,\]
+    where
+    \begin{compactitem}
+    \item $Q$ is finite set of states,
+    \item $\Sigma, \Gamma$ are finite sets of symbols 
+            ($\Sigma$ for input, $\Gamma$ for output).
+    \item $s \in Q$ is the start state, and
+    \item $\delta \colon Q \times \Sigma \mapsto Q \times \Gamma^*$
+        is the transition function.
+    \end{compactitem}
+\end{definition}
+
+\begin{definition}
+    \[ 
+    \delta^*(q,w) \in Q \times \Gamma^*
+    \]
+    is the extended transition function defined as such:
+    \[
+        \begin{cases}
+            \delta^*(q,\varepsilon) = (q,\varepsilon) \\
+            \begin{matrix}
+                \delta^*(q,aw)  =  (q'',uv) \quad \text{ if } \\
+                              & =  (delta(q,a)    = (q',u) & \text{ and } \\
+                              & =  (delta^*(q',w) = (q'',v) \\
+                              & & &=  (\text{ where $a \in \Sigma, u,v,w \in \Sigma^*$}
+            \end{matrix}
+        \end{cases}
+    \]
+\end{definition}
+
+\[
+    f_M(w) = u \quad\text{s.t.}\quad \delta^*(s,w) = (q,u)
+.\]
