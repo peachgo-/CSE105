@@ -1,0 +1,66 @@
+
+\subsection{Transition between FST and DFA}
+% ---------------------------------------------------------------------- 
+
+We can combine an FST with a DFA, obtain a new DFA as result.
+
+The DFA $M'$ recognize regular language $L(M)'$, but the FST $M$ does not recognize a
+language, instead it produces a transition function. In general, we use first machine FST
+to compute a input, and then fit the output (a string) into the second machine DFA to get
+a final state.
+
+\begin{theorem}[Transmition theorem]
+    \label{thm:FST_to_DFA} 
+    $
+    \forall \text{ \upshape FST} \, F = \lst{Q_F, \Sigma,\Gamma, \delta_F, s_F}, \\
+    \forall \text{ \upshape DFA} \, D = \lst{Q_D, \Gamma, \delta_D, s_D, F_D}, \\
+    \exists \text{ \upshape DFA} \, M = \lst{Q, \Sigma, \delta, s, F} 
+    \text{ s.t. \ }
+    $
+    \begin{align*}
+        \overbrace{L(M)}^A &= f^{-1}(\overbrace{L(D)}^B) \text{ meaning }\\
+        L(M) &= \set {w \in \Sigma^* \mid f_M(w) \in L(D)} \\
+        f(A) &= B \not \leftrightarrow A = \set{x \mid f(x) \in B} 
+    \end{align*}
+    A is the inverse image of B $\rightarrow A = f^{-1}(B)$.
+\end{theorem}
+
+\begin{proof}[Proof of \autoref{thm:FST_to_DFA}] \ \\
+    Let $Q = Q_F \times Q_D$,\\
+    \phantom{Let}$s\,=(s_F,s_D) $,\\
+    \phantom{Let}$F  = Q_F \times F_D$.\\
+    Then the transition function 
+    $
+    \delta \colon Q \times \Sigma \mapsto Q
+    $
+    will be
+    \[
+        \delta((q_F,q_D),a) = \big( q_F', \delta_D^*(q_D,w)\big),
+        \text{\upshape where }\delta_F(q_F,a) = (q_F',w) 
+    \]
+\end{proof}
+
+\begin{theorem}
+    % pic \rightarrow^ {\Sigma^*} FST(M_1) \rightarrow^ {\Gamma^*}FST(M_2) \rightarrow^
+    % {\Delta^*}
+\end{theorem}
+
+\begin{definition}[Reduction of languages]
+    \[
+        f \colon \Sigma^* \mapsto \Gamma^* \text{s.t.\ } A = f^{-1}(B)
+    \]
+    is called a reduction from $A$ to $B$. If such reduction exists, we say $A$ is
+    reducable to $B$, denoted by
+    \[
+        \reducable AB.
+    \]
+\end{definition}
+
+\begin{theorem}[]\ \\
+    if $\reducable AB$ and $B$ is regular, then $A$ is regular,The contrapositive will be \\
+    If $\reducable AB$ and $A$ is not regular, then $B$ is not regular.
+\end{theorem}
+
+
+
+
