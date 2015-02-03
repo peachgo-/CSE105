@@ -1,18 +1,45 @@
 
 
-% \begin{example}[]
-%     let
-%     \[
-%         L = \set{ w \in \set{0,1}^* \mid w^{\text{reverse}} = w }
-%     \]
-%     $w \in L$ could be 00100 or 1001. 0011 $\notin L$.
-% \end{example}
+Let's try to prove Non-regular language using the pumping lemma
+\begin{example}[Example 1.75 on book $P_{97}$]
+    let
+    $
+        L = \set{ w \in \set{0,1}^* \mid w^{\text{reverse}} = w }
+    $
+    which is the same as
+    $
+        L = \set{ ww \mid w \in \set{0,1}^* }
+    $,
+    means $w \in L$ could be 00100 or 1001. 0011 $\notin L$. 
+
+    We show that $L$ is nonregular, using the pumping lemma.
+
+    \begin{proof} \
+
+        Assume to the contrary that $L$ is regular. Let $p$ be the pumping length given by
+        the pumping lemma. Let $s$ be the string $0^p10^p1$. Because $s \in L$ and $s$ has
+        length greater than $p$, the pumping lemma guarantees that $s$ can be split into
+        three pieces, $s = xyz$, satisfying the three conditions of the lemma.We show that
+        this outcome is impossible.
+
+        Condition 3 is crucial, because without it we could pump $s$ if we let $x$ and $z$
+        be the empty string. With condition 3: 
+        \[
+            \underbrace{0 \cdots 0}_p 1 \underbrace{0 \cdots 0}_p 1
+        \]
+        $\abs{xy}$ must $\le p$, makes $y$ must consist only of 0s, so $xyyz \not \in L$.
+    \end{proof}
+
+        Observe that it is critical to the proof that we chose the propriate string, as
+        opposed to, say, the string $0^p0^p$ could not lead to a contradiction because it
+        is a member of $L$ and it can be pumped.
+\end{example}
 
 \begin{example}[Prove $P \notin$ Reg Using Pumping Lemma]
     let
     \[
         P = \set{ w \in \set{1}^* \mid \text{$\abs w$ is a prime number} } 
-          = \set {11,111,11111, \cdots}
+        = \set {11,111,11111, \cdots}
     \]
     Claim: $P$ is not regular.
 
@@ -98,14 +125,16 @@
             \delta^*(q,\varepsilon) = (q,\varepsilon) \\
             \begin{matrix}
                 \delta^*(q,aw)  =  (q'',uv) \quad \text{ if } \\
-                              & =  (delta(q,a)    = (q',u) & \text{ and } \\
-                              & =  (delta^*(q',w) = (q'',v) \\
+                              & =  \delta(q,a)    = (q',u) & \text{ and } \\
+                              & =  \delta^*(q',w) = (q'',v) \\
                               & & &=  (\text{ where $a \in \Sigma, u,v,w \in \Sigma^*$}
             \end{matrix}
         \end{cases}
     \]
 \end{definition}
 
+\begin{definition}[$f_M$ of and FST]
 \[
-    f_M(w) = u \quad\text{s.t.}\quad \delta^*(s,w) = (q,u)
+    f_M(w) = u \quad\text{\upshape s.t.}\quad \delta^*(s,w) = (q,u).
 .\]
+\end{definition}
