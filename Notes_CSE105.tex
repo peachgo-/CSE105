@@ -276,12 +276,31 @@
 
 %% in-para enum, item, descript;
 %%---------------------------------------------------------------------------
-\usepackage{paralist}
+\usepackage[neverdecrease]{paralist}
+
+
+
+%% indent for description environment. 支持多行对齐
+% \renewenvironment{description}[1]{
+%     \begin{list}{}{%
+%             \renewcommand{\makelabel}[1]{\bfseries{##1}\hfil}%
+%             \setlength{\leftmargin}{10pt}% 缩进10
+%             \settowidth{\labelwidth}{\bfseries #1}%
+%             \setlength{\labelsep}{1em}%
+%         \setlength{\itemindent}{0pt}%
+%             \setlength{\listparindent}{0pt}%
+%             \addtolength{\leftmargin}{\labelwidth}%
+%     \addtolength{\leftmargin}{\labelsep}}
+% }{\end{list}}
 
 %% lettrine;
 %%---------------------------------------------------------------------------
 %\usepackage{lettrine}
 %	\newcommand{\mylettrine}[1]{\lettrine[lines=2,lraise=0,nindent=0em]{#1\hspace{1mm}}{}}
+
+%% customizing list
+\usepackage{enumitem}
+\setlist[description]{leftmargin=\parindent,labelindent=\parindent}
 
 %% Math;
 %%---------------------------------------------------------------------------
@@ -309,6 +328,7 @@
 
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}
 
 %% symbols
 %%---------------------------------------------------------------------------
@@ -338,7 +358,10 @@
 %%
 \newcommand{\DFA}{{ M = \lst{Q, \Sigma, \delta, s, F} }}
 \newcommand{\NFA}{{ N = \lst{Q, \Sigma, \delta, s, F} }}
-\newcommand{\reducable}[2]{#1 \le_{\text{\upshape FST}} #2}
+\newcommand{\NFST}{{ M = \lst{Q,\Sigma,\Gamma,\delta,s,F} }}
+% \newcommand{\reducable}[2]{#1 \le_{\text{\upshape FST}} #2}
+\newcommand{\reducable}{{ \,\le_{\text{\upshape FST}}\, }}
+\newcommand{\reducableN}{{ \,\le_{\text{\upshape NFST}}\, }}
 \newcommand{\rev}{{ \mathrm{rev} }}
 \newcommand{\combination}{{ \mathrm{C} }}
 \newcommand{\permutation}{{ \mathrm{P} }}
@@ -515,6 +538,8 @@
 \input{lec8}
 \input{lec9}
 \input{lec10}
+\input{lec11}
+\input{lec12}
 
 \end{document}
 

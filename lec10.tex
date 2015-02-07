@@ -40,26 +40,87 @@ a final state.
     \]
 \end{proof}
 
-\begin{theorem}
-    % pic \rightarrow^ {\Sigma^*} FST(M_1) \rightarrow^ {\Gamma^*}FST(M_2) \rightarrow^
-    % {\Delta^*}
+\subsection{Composing FSTs}
+% ------------------------------------------------------------
+
+\[
+    \xrightarrow{\Sigma^*} FST(M_1)
+    \xrightarrow{\Gamma^*}FST(M_2)
+    \xrightarrow{\Delta^*} DFA(M)
+\]
+Any two functions $f \colon \Sigma^* \rightarrow \Gamma^*$ and $g \colon \Sigma^*
+\rightarrow \Delta^*$ can be combined using the standard function
+composition operation $(g \circ f): \Sigma^* \rightarrow P(\Delta^*)$ defined as 
+$(g \circ f)(w) = g(f(w))$. In order for $f_{M_2} \circ f_{M_1}$ to be FST-computable, we
+need to be able to run $M_1$ and $M_2$ at the same time, and process the input string $w$
+in a streaming fashion. The following theorem shows how to do that
+
+\begin{theorem}[FSTs are Composable]
+    \label{thm:composable_FST}
+    \begin{align*}
+        & \forall \text{\upshape FST} M_1 = \lst{Q_1,\Sigma,\Gamma,\delta_1,s_1},
+                                      M_2 = \lst{Q_2,\Gamma,\Delta,\delta_2,s_2}, \\
+        & \exists \text{\upshape FST} M = M_2 \circ M_1
+        \text{ s.t.\ } f_M = f_{M_2} \circ f_{M_1}.
+    \end{align*}
 \end{theorem}
 
-\begin{definition}[Reduction of languages]
+\begin{proof}[Proof of \autoref{thm:composable_FST}]
+    $
+    \text{Let } M = (Q, \Sigma, \Delta, \delta, s)
+    \text{ where } Q = Q1 \times Q2, s = (s1, s2) \in Q \text{ and }
+    \delta: Q \times \Sigma_1 \mapsto Q \times \Gamma^*_2
+    \text{ is the function defined as }
+    \delta((q_1, q_2), a) = ((q_1', q_2')), v) \text{ with }
+    (q_1',u) = \delta_1(q_1,a)   \text{ and }
+    (q_2',v) = \delta_2^*(q_2,u) \text{ and }
+    $
+    It can be easily verified by induction that
+    $f_M = f_{M_2} \circ f_{M_1}$.
+\end{proof}
+
+\subsection{FST-reductions}
+% ------------------------------------------------------------
+
+The following shows that the preimage of a regular language under an FST-computable
+function is also regular.
+
+\begin{definition}[Reduction of languages] \ \\
+    For any FST-computable function $f_M \colon \Sigma^* \mapsto \Gamma^*$ and any regular
+    language $B \subseteq \Gamma^*$,
     \[
-        f \colon \Sigma^* \mapsto \Gamma^* \text{s.t.\ } A = f^{-1}(B)
-    \]
-    is called a reduction from $A$ to $B$. If such reduction exists, we say $A$ is
-    reducable to $B$, denoted by
-    \[
-        \reducable AB.
+        \text{\upshape the language }A = f_M^{-1}(B) 
+        = \set{ w\in \Sigma^* \mid f_M(w) \in B}
+        \text{\upshape is also regular.}
     \]
 \end{definition}
 
-\begin{theorem}[]\ \\
-    if $\reducable AB$ and $B$ is regular, then $A$ is regular,The contrapositive will be \\
-    If $\reducable AB$ and $A$ is not regular, then $B$ is not regular.
+    This is  called a reduction from $A$ to $B$. If such reduction exists, we say $A$ is
+    FST-reducable to $B$, denoted by
+    \[
+        A \reducable B.
+    \]
+
+\begin{theorem}[]\ For any two Language $A,B \subseteq \Sigma^*$, a reduction from $A$ to
+    $B$ is a function $f:\Sigma^* \mapsto \Sigma$ s.t. for all $w \in \Sigma^*$,
+    \begin{compactitem}
+    \item 
+        if $w \in A$ then $f(w) \in B$, and
+    \item
+        if $w \not \in A$ then $f(w) \not \in B$.
+    \end{compactitem}
+    
+    $A$ is a inverse image of $B$, A reduction $f$ is FST-computable if it is computed by
+a Finite State Transducer T.  
 \end{theorem}
+
+\begin{corollary}
+        If  $A \reducable B $ and $B$ is regular, then $A$ is regular,The contrapositive will
+\end{corollary}
+
+\begin{corollary}
+        If $A \reducable B$ and $A$ is not regular, then $B$ is not regular.
+\end{corollary}
 
 
 
